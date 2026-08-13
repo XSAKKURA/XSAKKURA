@@ -1,0 +1,877 @@
+<title>DTaaS Сбера</title>
+<meta name="description" content="Цифровая трансформация как сервис от Сбера: методология, команда, направления, партнёрская сеть, цифры и кейсы.">
+<style>
+  :root {
+    --ground: #F3F6F2;
+    --surface: #FFFFFF;
+    --surface-2: #EAEFE8;
+    --ink: #0F1912;
+    --ink-2: #35473B;
+    --muted: #61705F;
+    --line: #D8E0D6;
+    --line-strong: #BFCBBC;
+    --accent: #10743A;
+    --accent-ink: #0B5B2C;
+    --accent-wash: #E3F0E5;
+    --signal: #9A5A0F;
+    --signal-wash: #F6ECDC;
+    --shadow: 0 1px 2px rgba(15, 25, 18, .05), 0 8px 24px -16px rgba(15, 25, 18, .25);
+
+    --display: Georgia, "Droid Serif", "Liberation Serif", "Times New Roman", serif;
+    --body: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, "Liberation Mono", monospace;
+
+    --measure: 68ch;
+    --s1: .5rem;
+    --s2: .875rem;
+    --s3: 1.375rem;
+    --s4: 2.25rem;
+    --s5: 3.5rem;
+    --s6: 5.5rem;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #0A110C;
+      --surface: #111A14;
+      --surface-2: #17231A;
+      --ink: #E8EFE8;
+      --ink-2: #C0CDC1;
+      --muted: #8B9C8D;
+      --line: #233126;
+      --line-strong: #334537;
+      --accent: #4FC276;
+      --accent-ink: #7FD79B;
+      --accent-wash: #14291B;
+      --signal: #D9A254;
+      --signal-wash: #2A2013;
+      --shadow: 0 1px 2px rgba(0, 0, 0, .5), 0 12px 32px -20px rgba(0, 0, 0, .9);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ground: #0A110C;
+    --surface: #111A14;
+    --surface-2: #17231A;
+    --ink: #E8EFE8;
+    --ink-2: #C0CDC1;
+    --muted: #8B9C8D;
+    --line: #233126;
+    --line-strong: #334537;
+    --accent: #4FC276;
+    --accent-ink: #7FD79B;
+    --accent-wash: #14291B;
+    --signal: #D9A254;
+    --signal-wash: #2A2013;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .5), 0 12px 32px -20px rgba(0, 0, 0, .9);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: var(--accent-ink); text-underline-offset: .18em; text-decoration-thickness: 1px; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+
+  .shell {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0 var(--s5);
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 var(--s3) var(--s6);
+  }
+
+  /* ---------- rail ---------- */
+  .rail { display: none; }
+
+  @media (min-width: 1080px) {
+    .shell { grid-template-columns: 216px minmax(0, var(--measure)); justify-content: center; }
+    .rail {
+      display: block;
+      grid-column: 1;
+      align-self: start;
+      position: sticky;
+      top: 0;
+      padding-top: var(--s6);
+      max-height: 100vh;
+      overflow-y: auto;
+    }
+    .masthead, .flow, .colophon { grid-column: 2; }
+  }
+
+  .rail-title {
+    font-family: var(--mono);
+    font-size: .68rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 var(--s2);
+  }
+  .rail ol { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 1px; }
+  .rail a {
+    display: block;
+    padding: 5px 0 5px 13px;
+    border-left: 2px solid var(--line);
+    color: var(--muted);
+    text-decoration: none;
+    font-size: .87rem;
+    line-height: 1.35;
+  }
+  .rail a:hover { color: var(--ink); border-left-color: var(--line-strong); }
+  .rail a[aria-current="true"] { color: var(--accent-ink); border-left-color: var(--accent); }
+
+  /* ---------- masthead ---------- */
+  .masthead { padding: var(--s6) 0 var(--s4); }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: .7rem;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--accent-ink);
+    margin: 0 0 var(--s3);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--s1);
+  }
+  .eyebrow .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); display: inline-block; }
+
+  h1 {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(2.4rem, 6.4vw, 3.85rem);
+    line-height: 1.06;
+    letter-spacing: -.015em;
+    text-wrap: balance;
+    margin: 0 0 var(--s3);
+  }
+  h1 em { font-style: italic; color: var(--accent-ink); }
+
+  .standfirst {
+    font-size: 1.16rem;
+    line-height: 1.6;
+    color: var(--ink-2);
+    max-width: 60ch;
+    margin: 0 0 var(--s3);
+  }
+  .standfirst strong { color: var(--ink); font-weight: 600; }
+
+  .byline {
+    font-family: var(--mono);
+    font-size: .74rem;
+    color: var(--muted);
+    line-height: 1.7;
+    border-top: 1px solid var(--line);
+    padding-top: var(--s2);
+    margin: var(--s4) 0 0;
+  }
+
+  /* ---------- stat band ---------- */
+  .band {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    overflow: hidden;
+    margin: var(--s4) 0 0;
+  }
+  .band > div { background: var(--surface); padding: var(--s3) var(--s2) var(--s2); }
+  .band .figure {
+    font-family: var(--mono);
+    font-variant-numeric: tabular-nums;
+    font-size: 1.72rem;
+    line-height: 1.05;
+    letter-spacing: -.02em;
+    color: var(--accent-ink);
+    display: block;
+  }
+  .band .label { font-size: .84rem; color: var(--ink-2); display: block; margin-top: 7px; line-height: 1.4; }
+  .band .src { font-family: var(--mono); font-size: .66rem; color: var(--muted); display: block; margin-top: 8px; letter-spacing: .04em; }
+  .band .figure.sm { font-size: 1.28rem; letter-spacing: -.01em; padding-top: 5px; }
+  .band .goal .figure { color: var(--signal); }
+
+  /* ---------- flow / sections ---------- */
+  .flow { display: flex; flex-direction: column; gap: var(--s6); padding-top: var(--s5); }
+
+  section { scroll-margin-top: 2rem; }
+
+  .sec-head { display: flex; align-items: baseline; gap: var(--s2); border-top: 1px solid var(--line-strong); padding-top: var(--s2); margin-bottom: var(--s3); }
+  .sec-num { font-family: var(--mono); font-size: .72rem; color: var(--muted); letter-spacing: .1em; }
+  h2 {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(1.6rem, 3.6vw, 2.05rem);
+    line-height: 1.18;
+    letter-spacing: -.01em;
+    text-wrap: balance;
+    margin: 0;
+  }
+  h3 {
+    font-size: 1rem;
+    font-weight: 650;
+    letter-spacing: -.005em;
+    margin: 0 0 var(--s1);
+    color: var(--ink);
+  }
+
+  p { margin: 0 0 var(--s3); max-width: var(--measure); }
+  p:last-child { margin-bottom: 0; }
+
+  .lede { font-size: 1.05rem; color: var(--ink-2); }
+
+  /* ---------- pull quote ---------- */
+  blockquote {
+    margin: var(--s4) 0;
+    padding: 0 0 0 var(--s3);
+    border-left: 2px solid var(--accent);
+  }
+  blockquote p {
+    font-family: var(--display);
+    font-size: 1.28rem;
+    line-height: 1.42;
+    font-style: italic;
+    color: var(--ink);
+    margin-bottom: var(--s1);
+  }
+  blockquote footer { font-family: var(--mono); font-size: .74rem; color: var(--muted); letter-spacing: .03em; }
+
+  /* ---------- stages (real sequence) ---------- */
+  .stages { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+  .stages li { display: grid; grid-template-columns: 3.1rem minmax(0, 1fr); gap: var(--s2); padding: var(--s3) 0; border-top: 1px solid var(--line); }
+  .stages li:first-child { border-top: none; padding-top: 0; }
+  .stages .step {
+    font-family: var(--mono);
+    font-variant-numeric: tabular-nums;
+    font-size: .95rem;
+    color: var(--accent);
+    padding-top: 2px;
+  }
+  .stages p { margin: 0; color: var(--ink-2); font-size: .96rem; }
+  .stages .note { display: block; margin-top: 7px; font-size: .87rem; color: var(--muted); }
+
+  /* ---------- cards ---------- */
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(232px, 1fr)); gap: var(--s2); }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    padding: var(--s3);
+    box-shadow: var(--shadow);
+  }
+  .card p { font-size: .92rem; color: var(--ink-2); margin: 0; }
+  .card .tag {
+    font-family: var(--mono);
+    font-size: .66rem;
+    text-transform: uppercase;
+    letter-spacing: .12em;
+    color: var(--muted);
+    display: block;
+    margin-bottom: var(--s1);
+  }
+
+  /* ---------- roles ---------- */
+  .roles { display: flex; flex-direction: column; gap: 0; margin: 0; }
+  .roles div { padding: var(--s3) 0; border-top: 1px solid var(--line); display: grid; grid-template-columns: minmax(0, 11rem) minmax(0, 1fr); gap: var(--s1) var(--s3); }
+  .roles div:first-child { border-top: none; padding-top: 0; }
+  .roles dt { font-weight: 650; font-size: .95rem; }
+  .roles dt span { display: block; font-family: var(--mono); font-size: .68rem; font-weight: 400; color: var(--muted); letter-spacing: .06em; margin-top: 3px; }
+  .roles dd { margin: 0; font-size: .94rem; color: var(--ink-2); }
+
+  /* ---------- chips ---------- */
+  .chips { display: flex; flex-wrap: wrap; gap: var(--s1); padding: 0; margin: 0; list-style: none; }
+  .chips li {
+    font-family: var(--mono);
+    font-size: .76rem;
+    letter-spacing: .02em;
+    padding: 5px 10px;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    color: var(--ink-2);
+    background: var(--surface);
+  }
+
+  /* ---------- industry bars ---------- */
+  .chart { margin: 0; }
+  .chart figcaption { font-size: .88rem; color: var(--muted); margin-bottom: var(--s3); }
+  table.bars { width: 100%; border-collapse: collapse; }
+  table.bars caption { text-align: left; font-family: var(--mono); font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); padding-bottom: var(--s2); }
+  table.bars th, table.bars td { padding: 7px 0; vertical-align: middle; font-weight: 400; text-align: left; }
+  table.bars th { width: 10.5rem; font-size: .93rem; color: var(--ink); padding-right: var(--s2); }
+  table.bars td.track { width: auto; }
+  table.bars td.val {
+    width: 3.6rem;
+    text-align: right;
+    font-family: var(--mono);
+    font-variant-numeric: tabular-nums;
+    font-size: .9rem;
+    color: var(--ink-2);
+  }
+  .bar { height: 13px; border-radius: 0 3px 3px 0; background: var(--accent); transition: filter .15s ease; }
+  tr:hover .bar { filter: brightness(1.12); }
+  .bar.rest { background: var(--line-strong); }
+  tr.rest th, tr.rest td.val { color: var(--muted); }
+
+  /* ---------- timeline ---------- */
+  .timeline { list-style: none; margin: 0; padding: 0; }
+  .timeline li { display: grid; grid-template-columns: 4.6rem minmax(0, 1fr); gap: var(--s3); padding-bottom: var(--s4); position: relative; }
+  .timeline li:last-child { padding-bottom: 0; }
+  .timeline .year {
+    font-family: var(--mono);
+    font-variant-numeric: tabular-nums;
+    font-size: .92rem;
+    color: var(--accent-ink);
+    padding-top: 1px;
+  }
+  .timeline .body { border-left: 1px solid var(--line); padding: 0 0 0 var(--s3); margin-left: -.9rem; }
+  .timeline li::before {
+    content: "";
+    position: absolute;
+    left: calc(4.6rem + var(--s3) - .9rem - 3.5px);
+    top: 8px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--ground);
+  }
+  .timeline li.future::before { background: var(--signal); }
+  .timeline li.future .year { color: var(--signal); }
+  .timeline .body p { margin: 0; font-size: .95rem; color: var(--ink-2); }
+  .timeline .body strong { color: var(--ink); font-weight: 650; }
+
+  /* ---------- cases ---------- */
+  .cases { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 3px; overflow: hidden; }
+  .cases article { background: var(--surface); padding: var(--s3); }
+  .cases h3 { margin-bottom: 6px; }
+  .cases .meta { font-family: var(--mono); font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: var(--s1); }
+  .cases p { font-size: .91rem; color: var(--ink-2); margin: 0; }
+  .cases .result { display: block; margin-top: var(--s1); font-size: .89rem; color: var(--accent-ink); }
+  .cases .built { display: block; margin-top: var(--s1); font-size: .82rem; color: var(--muted); }
+
+  /* ---------- callout ---------- */
+  .callout {
+    background: var(--accent-wash);
+    border: 1px solid color-mix(in oklab, var(--accent) 32%, var(--ground));
+    border-radius: 3px;
+    padding: var(--s3);
+    margin: var(--s4) 0 0;
+  }
+  .callout p { font-size: .94rem; color: var(--ink-2); margin: 0; }
+  .callout p + p { margin-top: var(--s2); }
+  .callout .tag { font-family: var(--mono); font-size: .68rem; letter-spacing: .12em; text-transform: uppercase; color: var(--accent-ink); display: block; margin-bottom: var(--s1); }
+
+  .caveat { background: var(--signal-wash); border-color: color-mix(in oklab, var(--signal) 34%, var(--ground)); }
+  .caveat .tag { color: var(--signal); }
+
+  /* ---------- checklist ---------- */
+  .checklist { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--s2); }
+  .checklist li { display: grid; grid-template-columns: 1.4rem minmax(0, 1fr); gap: var(--s2); font-size: .96rem; color: var(--ink-2); }
+  .checklist li::before { content: "→"; color: var(--accent); font-family: var(--mono); }
+
+  /* ---------- colophon ---------- */
+  .colophon { border-top: 1px solid var(--line-strong); margin-top: var(--s6); padding-top: var(--s3); }
+  .colophon h2 { font-size: 1.15rem; margin-bottom: var(--s2); }
+  .colophon ol { margin: 0; padding-left: 1.2rem; display: flex; flex-direction: column; gap: 9px; }
+  .colophon li { font-size: .89rem; color: var(--ink-2); }
+  .colophon .fine { font-family: var(--mono); font-size: .72rem; color: var(--muted); line-height: 1.65; margin-top: var(--s3); max-width: 62ch; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  }
+</style>
+
+<div class="shell">
+  <nav class="rail" aria-label="Разделы страницы">
+    <p class="rail-title">Содержание</p>
+    <ol>
+      <li><a href="#context">Зачем это Сберу</a></li>
+      <li><a href="#method">Методология: 5 этапов</a></li>
+      <li><a href="#team">Команда и роли</a></li>
+      <li><a href="#needs">Пять направлений спроса</a></li>
+      <li><a href="#stack">Что встраивают в решения</a></li>
+      <li><a href="#partners">Партнёры и акселераторы</a></li>
+      <li><a href="#industries">Отрасли</a></li>
+      <li><a href="#timeline">Хронология</a></li>
+      <li><a href="#effect">Эффект и кейсы</a></li>
+      <li><a href="#start">С чего начинают</a></li>
+      <li><a href="#sources">Источники</a></li>
+    </ol>
+  </nav>
+
+  <header class="masthead">
+    <p class="eyebrow"><span class="dot"></span> Сбер · корпоративный бизнес · DTaaS</p>
+    <h1>Цифровая трансформация <em>как сервис</em></h1>
+    <p class="standfirst">
+      <strong>DTaaS (Digital Transformation as a Service)</strong> — модель, в которой Сбер сопровождает
+      корпоративного клиента на всех этапах трансформации: от осознания идеи и написания стратегии
+      до реинжиниринга процессов, выбора решения, внедрения и последующего развития. Банк продаёт
+      не отдельный продукт, а собственный опыт трансформации плюс доступ к экосистеме сервисов
+      и сети ИТ-партнёров.
+    </p>
+    <p class="standfirst">
+      Логика простая: база прибыльных корпоративных клиентов почти не меняется год к году, поэтому
+      Сбер решил расти не за счёт новых клиентов, а за счёт роста существующих — став для них
+      партнёром развития, а не поставщиком банковских продуктов.
+    </p>
+
+    <div class="band">
+      <div>
+        <span class="figure">1000+</span>
+        <span class="label">проектов трансформации запущено</span>
+        <span class="src">2022–2023 · РБК Тренды</span>
+      </div>
+      <div>
+        <span class="figure">500+</span>
+        <span class="label">из них полностью реализованы</span>
+        <span class="src">на конец 2023 · РБК Тренды</span>
+      </div>
+      <div>
+        <span class="figure sm">4,6 млрд ₽</span>
+        <span class="label">объём проектов ЦТ для клиентов</span>
+        <span class="src">итоги 2022 · TAdviser</span>
+      </div>
+      <div class="goal">
+        <span class="figure">~9000</span>
+        <span class="label">проектов — цель к концу 2026 года</span>
+        <span class="src">план · РБК Тренды, 2023</span>
+      </div>
+    </div>
+
+    <p class="byline">
+      Обзор собран по открытым источникам (СберПро Медиа, РБК Тренды, TAdviser, РИА Новости Крым).<br>
+      Данные охватывают период 2021–2025 годов; у каждой цифры указан год и источник.
+    </p>
+  </header>
+
+  <main class="flow">
+
+    <section id="context">
+      <div class="sec-head"><span class="sec-num">01</span><h2>Зачем это Сберу и клиентам</h2></div>
+      <p class="lede">
+        Сервис вырос из двух наблюдений. Первое — про спрос: по данным Сбера,
+        <strong>90% корпоративных клиентов</strong> задумываются о цифровой трансформации, но лишь
+        около <strong>30%</strong> понимают, с чего начать и как её провести. Второе — про самого
+        Сбера: банк много лет трансформировал собственные процессы и в результате сократил
+        time-to-market своих продуктов <strong>в семь раз</strong>. Этот опыт и стал товаром.
+      </p>
+      <blockquote>
+        <p>«Получается, мы растём не за счёт расширения базы, а за счёт того, что растут наши клиенты».</p>
+        <footer>Дмитрий Трофимов, управляющий директор департамента развития корпоративного бизнеса Сбербанка</footer>
+      </blockquote>
+      <p>
+        Размер рынка Сбер оценивает через инвестиции самих компаний: вложения в цифровую
+        трансформацию составляют <strong>3–10% выручки</strong> компании в год, то есть речь идёт
+        о сотнях миллиардов рублей. Отсюда и ставка на модель, где банк встроен в проект клиента
+        с самого начала — на этапе, когда решение о технологиях ещё не принято.
+      </p>
+    </section>
+
+    <section id="method">
+      <div class="sec-head"><span class="sec-num">02</span><h2>Методология: пять этапов</h2></div>
+      <p>
+        Единая методология описывает клиентский путь трансформации. Этапы идут строго по порядку —
+        после внедрения цикл начинается заново, уже с новым уровнем зрелости компании.
+      </p>
+      <ol class="stages">
+        <li>
+          <span class="step">01</span>
+          <p>
+            <strong>Осознание идеи.</strong> Разбор бизнес-направлений и целей компании: что именно
+            означает «быть цифровым» для этого бизнеса.
+            <span class="note">Часто начинается с обучения — топ-менеджмент должен понимать, о чём идёт речь.</span>
+          </p>
+        </li>
+        <li>
+          <span class="step">02</span>
+          <p>
+            <strong>Разработка стратегии.</strong> Формулировка стратегических целей цифровизации.
+            <span class="note">По оценке Сбера, у 90% компаний внятно сформулированной цифровой стратегии нет вовсе.</span>
+          </p>
+        </li>
+        <li>
+          <span class="step">03</span>
+          <p>
+            <strong>Реинжиниринг процессов и оргструктуры.</strong> Описание процессов и клиентских
+            путей, проектирование целевой архитектуры.
+            <span class="note">Ключевое требование: каждый процесс оставляет «цифровые следы», а решения принимаются по объективным критериям.</span>
+          </p>
+        </li>
+        <li>
+          <span class="step">04</span>
+          <p>
+            <strong>Проектирование и выбор решения.</strong> Сбер использует собственные инструменты
+            (ИИ, блокчейн, облако), но подбирает и внешние продукты.
+            <span class="note">К выбору привлекаются партнёры — более 200 ИТ-компаний и интеграторов.</span>
+          </p>
+        </li>
+        <li>
+          <span class="step">05</span>
+          <p>
+            <strong>Внедрение, сопровождение, масштабирование.</strong> За счёт сформированного на
+            предыдущих этапах видения внедрение идёт быстро.
+            <span class="note">Дальше — развитие решения и следующий виток цикла.</span>
+          </p>
+        </li>
+      </ol>
+    </section>
+
+    <section id="team">
+      <div class="sec-head"><span class="sec-num">03</span><h2>Кто это делает: команда DTaaS</h2></div>
+      <p>
+        В каждом территориальном банке Сбера сформирована собственная команда цифровой трансформации.
+        По состоянию на февраль 2023 года <strong>11 команд DTaaS</strong> покрывали всю территорию
+        страны, обеспечивая доступность сервиса любому корпоративному клиенту банка.
+      </p>
+      <dl class="roles">
+        <div>
+          <dt>Директор по цифровой трансформации <span>CDTO</span></dt>
+          <dd>Руководит командой территориального банка. Как правило — специалист с опытом работы в ИТ.</dd>
+        </div>
+        <div>
+          <dt>Менеджер по достижению успеха клиентом <span>CSM · Customer Success Manager</span></dt>
+          <dd>
+            Центральная роль сервиса, введённая в апреле 2021 года. Формально входит в команду продаж,
+            но основной KPI — <strong>рост бизнеса клиента</strong>, а не объём продаж. Выступает
+            экспертом и проектным менеджером по трансформации в проекте клиента. В банке работает
+            более 100 таких специалистов.
+          </dd>
+        </div>
+        <div>
+          <dt>Бизнес-аналитик</dt>
+          <dd>Готовит бизнес-требования, работает в совместных проектных командах с сотрудниками клиента.</dd>
+        </div>
+        <div>
+          <dt>UX-исследователь</dt>
+          <dd>Проектирует клиентский путь будущего цифрового решения, исследует пользовательский опыт.</dd>
+        </div>
+      </dl>
+      <div class="callout">
+        <span class="tag">Что делает CSM</span>
+        <p>
+          Представляет интересы клиента внутри банка · выстраивает долгосрочные отношения вместо
+          разовых сделок · разрабатывает подход к трансформации · инициирует и структурирует проекты ·
+          проводит исследования клиентского опыта · обучает и поддерживает сотрудников клиента ·
+          предупреждает проблемы до того, как они возникнут.
+        </p>
+      </div>
+    </section>
+
+    <section id="needs">
+      <div class="sec-head"><span class="sec-num">04</span><h2>Пять направлений клиентского спроса</h2></div>
+      <p>
+        Библиотека сервисов DTaaS собрана вокруг пяти типовых потребностей — с ними приходит
+        большинство компаний.
+      </p>
+      <div class="cards">
+        <div class="card">
+          <span class="tag">Направление 1</span>
+          <h3>Онлайн-продажи</h3>
+          <p>Интернет-магазины, выход на маркетплейсы, мобильные приложения, интеграция платёжных модулей.</p>
+        </div>
+        <div class="card">
+          <span class="tag">Направление 2</span>
+          <h3>Управление предприятием</h3>
+          <p>Автоматизация процессов, электронный документооборот, внедрение ERP-систем.</p>
+        </div>
+        <div class="card">
+          <span class="tag">Направление 3</span>
+          <h3>Цифровое производство</h3>
+          <p>Промышленный IoT, управление данными и производственными процессами.</p>
+        </div>
+        <div class="card">
+          <span class="tag">Направление 4</span>
+          <h3>Облачные технологии</h3>
+          <p>Миграция инфраструктуры в облако, оптимизация капитальных затрат.</p>
+        </div>
+        <div class="card">
+          <span class="tag">Направление 5</span>
+          <h3>Кибербезопасность</h3>
+          <p>Архитектурный консалтинг, выявление киберугроз, непрерывность бизнеса.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="stack">
+      <div class="sec-head"><span class="sec-num">05</span><h2>Что встраивают в клиентские решения</h2></div>
+      <p>
+        Отличие DTaaS от классического ИТ-консалтинга — в том, что сервисы Сбера встраиваются прямо
+        в продукт клиента через API. Уже по итогам пилотного 2021 года в решения клиентов было
+        встроено <strong>1330 сервисов</strong> экосистемы.
+      </p>
+      <ul class="chips">
+        <li>Кредитование и расчёты</li>
+        <li>Эквайринг</li>
+        <li>Моментальные платежи</li>
+        <li>Подписки и рекуррентные списания</li>
+        <li>Sber ID</li>
+        <li>Распознавание объектов</li>
+        <li>GigaChat</li>
+        <li>Блокчейн и смарт-контракты</li>
+        <li>Sber Cloud</li>
+        <li>Электронный документооборот</li>
+        <li>Рейтингование контрагентов</li>
+      </ul>
+    </section>
+
+    <section id="partners">
+      <div class="sec-head"><span class="sec-num">06</span><h2>Партнёрская сеть, хакатоны и акселераторы</h2></div>
+      <p>
+        Сбер не разрабатывает всё сам: банк «старается выбирать лучшее, что есть на рынке».
+        Партнёрская программа DTaaS выросла со <strong>130 компаний</strong> (2022) до
+        <strong>более 200 ИТ-компаний и интеграторов</strong> (2023) — разработчиков, интеграторов
+        и поставщиков решений.
+      </p>
+      <p>
+        Второй канал — совместные мероприятия. Конференция SberPro Tech 2023 собрала 1,2 млн зрителей
+        онлайн и более 6 млн просмотров, а хакатон по цифровой трансформации привлёк российские
+        ИТ-команды к созданию решений на API Сбера и его ИИ-компонентах.
+      </p>
+
+      <div class="callout">
+        <span class="tag">Цифровой акселератор DTaaS — юг России, 2025</span>
+        <p>
+          Региональные акселераторы прошли в Ростове-на-Дону, Ставрополе, Краснодаре и Симферополе;
+          финал состоялся в Симферополе 24 сентября 2025 года. В старте приняли участие
+          <strong>250 компаний и 25 ИТ-партнёров</strong> банка.
+        </p>
+        <p>
+          Результат: более <strong>185 компаний</strong> продолжили трансформацию,
+          <strong>54 предприятия</strong> перешли в активную разработку цифровых решений,
+          <strong>20 компаний</strong> собрали первые работающие прототипы — за три месяца.
+          На финале подписано ещё 6 соглашений между клиентами, ИТ-партнёрами и Сбером.
+          Наиболее перспективные направления по оценке банка: ИИ-агенты, цифровые двойники
+          и ИИ-решения для АПК.
+        </p>
+      </div>
+    </section>
+
+    <section id="industries">
+      <div class="sec-head"><span class="sec-num">07</span><h2>Отрасли</h2></div>
+      <figure class="chart">
+        <figcaption>
+          Кто чаще всего заказывает трансформацию. Доля отрасли в общем числе запущенных проектов
+          DTaaS по итогам 2022–2023 годов.
+        </figcaption>
+        <table class="bars">
+          <caption>Распределение проектов по отраслям</caption>
+          <tbody>
+            <tr>
+              <th scope="row">Торговля</th>
+              <td class="track"><div class="bar" style="width: 82.5%"></div></td>
+              <td class="val">33%</td>
+            </tr>
+            <tr>
+              <th scope="row">Строительство</th>
+              <td class="track"><div class="bar" style="width: 40%"></div></td>
+              <td class="val">16%</td>
+            </tr>
+            <tr>
+              <th scope="row">АПК</th>
+              <td class="track"><div class="bar" style="width: 30%"></div></td>
+              <td class="val">12%</td>
+            </tr>
+            <tr class="rest">
+              <th scope="row">Прочие отрасли</th>
+              <td class="track"><div class="bar rest" style="width: 97.5%"></div></td>
+              <td class="val">39%</td>
+            </tr>
+          </tbody>
+        </table>
+      </figure>
+      <p style="margin-top: var(--s3)">
+        Совместно с цифровыми командами Сбера на рынок выводились платформы для торгов зерном,
+        выкупа и расчётов за автомобили и металлолом, логистические сервисы и целые отраслевые
+        экосистемы.
+      </p>
+    </section>
+
+    <section id="timeline">
+      <div class="sec-head"><span class="sec-num">08</span><h2>Хронология</h2></div>
+      <ol class="timeline">
+        <li>
+          <span class="year">2021</span>
+          <div class="body">
+            <p>
+              <strong>Пилот.</strong> В апреле вводится роль Customer Success Manager, в территориальных
+              банках создаются цифровые команды, оформляется единый сервис DTaaS. Выручка пилота —
+              более <strong>2 млрд ₽</strong>, 1330 сервисов Сбера встроено в решения клиентов,
+              индекс удовлетворённости корпоративных клиентов (CSI) — <strong>89%</strong>.
+            </p>
+          </div>
+        </li>
+        <li>
+          <span class="year">2022</span>
+          <div class="body">
+            <p>
+              <strong>Масштабирование.</strong> В работе более 300 проектов, ещё около 200 — на стадии
+              обсуждения и структурирования. Партнёрская программа — 130+ компаний. Общий объём
+              проектов цифровой трансформации для клиентов Сбера превысил <strong>4,6 млрд ₽</strong>.
+            </p>
+          </div>
+        </li>
+        <li>
+          <span class="year">2023</span>
+          <div class="body">
+            <p>
+              <strong>Покрытие всей страны.</strong> К февралю 11 команд DTaaS работают по всей России.
+              За 2022–2023 годы запущено более <strong>1000 проектов</strong>, свыше
+              <strong>500</strong> полностью реализованы. Партнёров — более 200. Проходят конференция
+              SberPro Tech и хакатон по цифровой трансформации.
+            </p>
+          </div>
+        </li>
+        <li>
+          <span class="year">2025</span>
+          <div class="body">
+            <p>
+              <strong>Формат акселераторов.</strong> Программы для среднего и крупного бизнеса проходят
+              в регионах — юг России (Ростов-на-Дону, Ставрополь, Краснодар, Симферополь), а также
+              Сургут и Хабаровск. Фокус смещается к генеративному ИИ, ИИ-агентам и цифровым двойникам.
+            </p>
+          </div>
+        </li>
+        <li class="future">
+          <span class="year">2026</span>
+          <div class="body">
+            <p>
+              <strong>Цель.</strong> Рост числа проектов с тысячи почти до <strong>9000</strong>.
+              Развитие идёт через углубление экспертизы команд и расширение продуктового предложения.
+            </p>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <section id="effect">
+      <div class="sec-head"><span class="sec-num">09</span><h2>Эффект для клиента и кейсы</h2></div>
+      <p>
+        Главная метрика сервиса — не выручка банка, а динамика бизнеса клиента. По данным Сбера,
+        компании, прошедшие трансформацию, наращивают обороты примерно на <strong>20% быстрее</strong>
+        сопоставимых компаний (оценка по итогам пилота 2021 года); в более поздних материалах
+        TAdviser приводится оценка роста <strong>до 40% быстрее</strong> рынка.
+      </p>
+
+      <div class="cases">
+        <article>
+          <h3>Nocode.ru</h3>
+          <span class="meta">Победитель хакатона · 2023</span>
+          <p>Платформа для сборки цифровых экосистем: документооборот, клиентские порталы.</p>
+          <span class="built">Встроены: кредитование, расчёты, эквайринг, Sber ID, распознавание объектов.</span>
+        </article>
+        <article>
+          <h3>SRM ЦеновикPRO</h3>
+          <span class="meta">Победитель хакатона · 2023</span>
+          <p>Управление поставщиками и закупками.</p>
+          <span class="result">−30% операционных издержек, закупки вдвое быстрее, +80% к прозрачности.</span>
+          <span class="built">Встроены: моментальные платежи, подписки, рейтингование, GigaChat, Sber Cloud.</span>
+        </article>
+        <article>
+          <h3>АйТи Авиа</h3>
+          <span class="meta">Победитель хакатона · 2023</span>
+          <p>Смарт-контракты для авиалогистики: 400+ логистических компаний и 28 авиаперевозчиков.</p>
+          <span class="built">Встроены: смарт-контракты, кредит для бизнеса, GigaChat.</span>
+        </article>
+        <article>
+          <h3>«Сезоны сбора»</h3>
+          <span class="meta">От локального проекта к отрасли</span>
+          <p>Начинался как приложение для переработчика дикоросов в Карелии.</p>
+          <span class="result">Вырос в отраслевое ПО для автоматизации закупок и управления цепочкой поставок.</span>
+        </article>
+        <article>
+          <h3>«Кофемания»</h3>
+          <span class="meta">Ресторанная сеть · с 2021</span>
+          <p>Миграция в облачную инфраструктуру со Сбером как технологическим партнёром.</p>
+          <span class="result">Цель — поддержать масштабирование сети и оптимизировать затраты.</span>
+        </article>
+        <article>
+          <h3>Другие клиенты пилота</h3>
+          <span class="meta">2021–2022</span>
+          <p>Девелопер «Брусника», сеть отелей «Яхонты», производитель свежезамороженных продуктов «Ягоды Карелии», ритейлер Lady &amp; Gentleman.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="start">
+      <div class="sec-head"><span class="sec-num">10</span><h2>С чего начинается работа с сервисом</h2></div>
+      <p>
+        Если свести методологию к практическим шагам компании-заказчика, порядок входа выглядит так.
+      </p>
+      <ul class="checklist">
+        <li>Зафиксировать, зачем нужна трансформация: какие бизнес-показатели должны измениться и на сколько.</li>
+        <li>Оценить готовность процессов — есть ли данные, оставляют ли операции «цифровой след».</li>
+        <li>Обсудить задачу с командой DTaaS территориального банка: точка входа — CSM или CDTO.</li>
+        <li>Сформулировать цифровую стратегию до выбора вендора, а не после.</li>
+        <li>Собрать совместную проектную команду: аналитики банка, UX-исследователь, ИТ-партнёр, сотрудники компании.</li>
+        <li>Заложить бюджет исходя из ориентира в 3–10% годовой выручки и планировать не разовый проект, а цикл.</li>
+      </ul>
+
+      <div class="callout caveat">
+        <span class="tag">О цифрах на этой странице</span>
+        <p>
+          Данные собраны из публичных материалов и относятся к разным годам: показатели пилота — к 2021 году,
+          объём проектов и число команд — к 2022–2023, акселераторы — к 2025 году, цель в 9000 проектов —
+          это план, заявленный в 2023 году, а не факт. Публичной отчётности по DTaaS за 2024 и 2026 годы
+          в открытом доступе найти не удалось, поэтому промежуток между 2023 и 2025 годами показан по
+          региональным сообщениям. Актуальные условия имеет смысл уточнять напрямую в Сбере.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="colophon" id="sources">
+    <h2>Источники</h2>
+    <ol>
+      <li><a href="https://sber.pro/publication/gotovy-delitsya-opytom-chto-takoe-czifrovaya-transformacziya-kak-servis/">СберПро Медиа — «Готовы делиться опытом: что такое „цифровая трансформация как сервис“»</a> — модель сервиса, состав команды, пять направлений, итоги пилота 2021 года.</li>
+      <li><a href="https://trends.rbc.ru/trends/industry/cmrm/657abfab9a794792c01a9839">РБК Тренды — «Цифровая трансформация как сервис: что такое DTaaS и зачем он нужен»</a> — пять этапов методологии, статистика 2022–2023, кейсы хакатона, план до 2026 года.</li>
+      <li><a href="https://www.tadviser.ru/index.php/Продукт:Сбер:_Цифровая_трансформация_как_сервис_(DTaaS)">TAdviser — «Сбер: Цифровая трансформация как сервис (DTaaS)»</a> — хроника продукта, 11 команд, объём проектов 4,6 млрд ₽ за 2022 год.</li>
+      <li><a href="https://crimea.ria.ru/20250924/final-tsifrovogo-akseleratora-ot-sbera-proshel-v-krymu-1149686480.html">РИА Новости Крым — «Финал цифрового акселератора от „Сбера“ прошёл в Крыму», 24.09.2025</a> — итоги акселератора DTaaS на юге России.</li>
+      <li><a href="https://www.forbes.ru/brandvoice/541889-faktor-rosta-cifrovaa-transformacia-s-ispol-zovaniem-servisov-sbera">Forbes Brandvoice — «Фактор роста: цифровая трансформация с использованием сервисов Сбера»</a>.</li>
+      <li><a href="https://sberuniversity.ru/learning/program/tsifrovaya-transformatsiya-biznesa/">СберУниверситет — программа «Цифровая трансформация бизнеса»</a> — образовательный контур вокруг сервиса.</li>
+    </ol>
+    <p class="fine">
+      Справочный материал по открытым публикациям. Не является офертой, коммерческим предложением
+      или официальной позицией ПАО Сбербанк.
+    </p>
+  </footer>
+</div>
+
+<script>
+  (function () {
+    var links = Array.prototype.slice.call(document.querySelectorAll('.rail a'));
+    if (!links.length || !('IntersectionObserver' in window)) return;
+
+    var byId = {};
+    var targets = [];
+    links.forEach(function (link) {
+      var el = document.querySelector(link.getAttribute('href'));
+      if (!el) return;
+      byId[el.id] = link;
+      targets.push(el);
+    });
+
+    var visible = new Set();
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) visible.add(entry.target.id);
+        else visible.delete(entry.target.id);
+      });
+      var current = targets.filter(function (t) { return visible.has(t.id); })[0];
+      links.forEach(function (link) { link.removeAttribute('aria-current'); });
+      if (current && byId[current.id]) byId[current.id].setAttribute('aria-current', 'true');
+    }, { rootMargin: '-10% 0px -70% 0px' });
+
+    targets.forEach(function (t) { observer.observe(t); });
+  })();
+</script>
